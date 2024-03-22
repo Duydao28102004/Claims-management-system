@@ -5,6 +5,10 @@ import java.util.List;
 
 public class Dependent extends Customer {
     private PolicyHolder policyHolder;
+    public Dependent() {
+        super();
+        policyHolder = null;
+    }
 
     public Dependent(String id, String fullName, InsuranceCard insuranceCard, List<Claim> claims, PolicyHolder policyHolder) {
         super(id, fullName, insuranceCard, claims);

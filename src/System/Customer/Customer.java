@@ -8,6 +8,12 @@ public class Customer {
     private String fullName;
     private InsuranceCard insuranceCard;
     private List<Claim> claims;
+    public Customer() {
+        id = "default";
+        fullName = "default";
+        insuranceCard = null;
+        claims = null;
+    }
 
     public Customer(String id, String fullName, InsuranceCard insuranceCard, List<Claim> claims) {
         this.id = id;
