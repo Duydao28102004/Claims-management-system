@@ -3,25 +3,26 @@ package org.example.System.Customer;
 import org.example.System.Claim;
 import org.example.System.InsuranceCard;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 public class PolicyHolder extends Customer {
-    private List<Dependent> dependents;
+    private ArrayList<Dependent> dependents;
     public PolicyHolder() {
         super();
         dependents = null;
     }
 
-    public PolicyHolder(String id, String fullName, InsuranceCard insuranceCard, List<Claim> claims, List<Dependent> dependents) {
+    public PolicyHolder(String id, String fullName, InsuranceCard insuranceCard, ArrayList<Claim> claims, ArrayList<Dependent> dependents) {
         super(id, fullName, insuranceCard, claims);
         this.dependents = dependents;
     }
 
-    public List<Dependent> getDependents() {
+    public ArrayList<Dependent> getDependents() {
         return dependents;
     }
 
-    public void setDependents(List<Dependent> dependents) {
+    public void setDependents(ArrayList<Dependent> dependents) {
         this.dependents = dependents;
     }
 

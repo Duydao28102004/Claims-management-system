@@ -4,12 +4,13 @@ import org.example.System.Claim;
 import org.example.System.InsuranceCard;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Customer {
     private String id;
     private String fullName;
     private InsuranceCard insuranceCard;
-    private List<Claim> claims;
+    private ArrayList<Claim> claims;
     public Customer() {
         id = "default";
         fullName = "default";
@@ -17,7 +18,7 @@ public class Customer {
         claims = null;
     }
 
-    public Customer(String id, String fullName, InsuranceCard insuranceCard, List<Claim> claims) {
+    public Customer(String id, String fullName, InsuranceCard insuranceCard, ArrayList<Claim> claims) {
         this.id = id;
         this.fullName = fullName;
         this.insuranceCard = insuranceCard;
@@ -48,11 +49,11 @@ public class Customer {
         this.insuranceCard = insuranceCard;
     }
 
-    public List<Claim> getClaims() {
+    public ArrayList<Claim> getClaims() {
         return claims;
     }
 
-    public void setClaims(List<Claim> claims) {
+    public void setClaims(ArrayList<Claim> claims) {
         this.claims = claims;
     }
 }
