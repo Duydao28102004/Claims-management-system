@@ -1,0 +1,32 @@
+[
+  {
+    "id": "c641b8b6-26c3-4c06-a63e-4db8083753b5",
+    "claimDate": "Mar 30, 2023, 12:00:00 AM",
+    "insuredPerson": "Duy Dao",
+    "cardNumber": "0961448849",
+    "examDate": "Apr 1, 2023, 12:00:00 AM",
+    "claimAmount": 900.0,
+    "status": "Pending",
+    "bankingInfo": "Vietcombank"
+  },
+  {
+    "id": "c641b8b6-26c3-4c06-a63e-4db8083753b5",
+    "claimDate": "Mar 30, 2023, 12:00:00 AM",
+    "insuredPerson": "Duy Dao",
+    "cardNumber": "0961448849",
+    "examDate": "Apr 1, 2023, 12:00:00 AM",
+    "claimAmount": 900.0,
+    "status": "Pending",
+    "bankingInfo": "Vietcombank"
+  },
+  {
+    "id": "c641b8b6-26c3-4c06-a63e-4db8083753b5",
+    "claimDate": "Mar 30, 2023, 12:00:00 AM",
+    "insuredPerson": "Duy Dao",
+    "cardNumber": "0961448849",
+    "examDate": "Apr 1, 2023, 12:00:00 AM",
+    "claimAmount": 900.0,
+    "status": "Pending",
+    "bankingInfo": "Vietcombank"
+  }
+]
