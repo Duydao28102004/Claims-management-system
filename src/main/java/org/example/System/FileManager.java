@@ -2,6 +2,7 @@ package org.example.System;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.example.System.Customer.Dependent;
+import org.example.System.Customer.PolicyHolder;
 
 import java.io.File;
 import java.io.FileReader;
@@ -89,6 +90,35 @@ public class FileManager {
             ArrayList<Dependent> dependents = gson.fromJson(reader, collectionType);
             System.out.println("Object read from file successfully!");
             return dependents;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public ArrayList<PolicyHolder> policyHolderReader() {
+        Gson gson = new Gson();
+        String folderPath = "./data/";
+        String fileName = "policyHolder.json";
+        File file = new File(folderPath + fileName);
+        if (file.exists()) {
+            System.out.println("The file exists in the folder.");
+        } else {
+            System.out.println("The file does not exist in the folder.");
+            System.out.println("Creating a new file...");
+            try {
+                file.createNewFile();
+                System.out.println("The file is created.");
+            } catch (Exception e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+        }
+        try (FileReader reader = new FileReader(folderPath + fileName)) {
+            // Read JSON file
+            TypeToken<ArrayList<PolicyHolder>> collectionType = new TypeToken<ArrayList<PolicyHolder>>(){};
+            ArrayList<PolicyHolder> policyHolders = gson.fromJson(reader, collectionType);
+            System.out.println("Object read from file successfully!");
+            return policyHolders;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
