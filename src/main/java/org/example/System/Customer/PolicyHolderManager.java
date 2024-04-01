@@ -1,6 +1,7 @@
 package org.example.System.Customer;
 
 import org.example.System.Claim;
+import org.example.System.IdManager;
 import org.example.System.InsuranceCard;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class PolicyHolderManager {
         InsuranceCard insuranceCard = null;
         ArrayList<Claim> claims = new ArrayList<>();
         ArrayList<Dependent> dependents = new ArrayList<>();
-        String id = UUID.randomUUID().toString();
+        String id = "c-" + IdManager.generateId(7);
         return new PolicyHolder(id, fullName, insuranceCard, claims, dependents);
     }
     public static void deletePolicyHolder(ArrayList<PolicyHolder> policyHolders) {

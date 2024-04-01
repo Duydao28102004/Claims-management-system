@@ -28,12 +28,38 @@ public class PolicyHolder extends Customer {
 
     @Override
     public String toString() {
-        return "PolicyHolder{" +
-                "id='" + getId() + '\'' +
-                ", fullName='" + getFullName() + '\'' +
-                ", insuranceCard=" + getInsuranceCard() +
-                ", claims=" + getClaims() +
-                ", dependents=" + dependents +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("PolicyHolder{")
+                .append("id='").append(getId()).append('\'')
+                .append(", fullName='").append(getFullName()).append('\'')
+                .append(", insuranceCard=").append(getInsuranceCard());
+
+        // Append IDs of claims
+        stringBuilder.append(", claims=[");
+        for (Claim claim : getClaims()) {
+            stringBuilder.append(claim.getId()).append(" - ").append(claim.getStatus()).append(", ");
+        }
+        // Remove the trailing comma and space if there are claims
+        if (!getClaims().isEmpty()) {
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        }
+        stringBuilder.append(']');
+
+        // Append IDs of dependent claims
+        stringBuilder.append(", dependentClaims=[");
+        for (Dependent dependent : dependents) {
+            for (Claim claim : dependent.getClaims()) {
+                stringBuilder.append(claim.getId()).append(", ");
+            }
+        }
+        // Remove the trailing comma and space if there are dependent claims
+        if (!dependents.isEmpty() && !dependents.get(0).getClaims().isEmpty()) {
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        }
+        stringBuilder.append(']');
+
+        stringBuilder.append('}');
+        return stringBuilder.toString();
     }
 }

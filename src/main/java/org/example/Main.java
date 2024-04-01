@@ -44,7 +44,7 @@ public class Main {
                     scanner.nextLine();
                     switch (choice) {
                         case 1:
-                            Claim claim = claimProcessManager.addClaim();
+                            Claim claim = claimProcessManager.addClaim(dependents, policyHolders);
                             claims.add(claim);
                             break;
                         case 2:

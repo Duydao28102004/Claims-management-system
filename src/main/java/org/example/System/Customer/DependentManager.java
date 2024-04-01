@@ -1,15 +1,11 @@
 package org.example.System.Customer;
 
 import org.example.System.Claim;
+import org.example.System.IdManager;
 import org.example.System.InsuranceCard;
 
-import java.sql.SQLOutput;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class DependentManager {
     static Scanner scanner = new Scanner(System.in);
@@ -26,7 +22,7 @@ public class DependentManager {
         String fullName = scanner.nextLine();
         InsuranceCard insuranceCard = null;
         ArrayList<Claim> claims = new ArrayList<>();
-        String id = UUID.randomUUID().toString();
+        String id = "c-" + IdManager.generateId(7);
         return new Dependent(id, fullName, insuranceCard, claims);
     }
     public static void deleteDependent(ArrayList<Dependent> dependents) {

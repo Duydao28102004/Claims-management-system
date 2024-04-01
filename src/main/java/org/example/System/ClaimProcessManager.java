@@ -1,5 +1,7 @@
 package org.example.System;
 
+import org.example.System.Customer.*;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -15,7 +17,7 @@ public class ClaimProcessManager {
         }
     }
 
-    public Claim addClaim() {
+    public Claim addClaim(ArrayList<Dependent> dependents, ArrayList<PolicyHolder> policyHolders) {
         System.out.print("Enter claim date(Press enter to get current date)(yyyy-MM-dd): ");
         String claimDateInput = scanner.nextLine();
         Date claimDate;
@@ -34,11 +36,35 @@ public class ClaimProcessManager {
         }
         // Remove time component from claimDate
         claimDate = removeTimeComponent(claimDate);
-
-        System.out.print("Enter insured person: ");
-        String insuredPerson = scanner.nextLine();
-        System.out.print("Enter card number: ");
-        String cardNumber = scanner.nextLine();
+        System.out.println("Dependents:");
+        for (int i = 0; i < dependents.size(); i++) {
+            System.out.println((i + 1) + ". " + dependents.get(i).toString());
+        }
+        System.out.println("Policyholders:");
+        for (int i = 0; i < policyHolders.size(); i++) {
+            System.out.println((i + 1 + dependents.size()) + ". " + policyHolders.get(i).toString());
+        }
+        System.out.print("Enter the id of insured person: ");
+        int selectedIndex = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left-over
+        Customer insuredPerson;
+        if (selectedIndex >= 1 && selectedIndex <= dependents.size()) {
+            insuredPerson = dependents.get(selectedIndex - 1);
+        } else if (selectedIndex > dependents.size() && selectedIndex <= dependents.size() + policyHolders.size()) {
+            insuredPerson = policyHolders.get(selectedIndex - 1 - dependents.size());
+        } else {
+            System.out.println("Invalid selection. Claim creation failed.");
+            return null;
+        }
+        String cardNumber;
+        if (insuredPerson.getInsuranceCard() == null) {
+            System.out.println("Insured person does not have an insurance card.");
+            System.out.print("Enter card number: ");
+            cardNumber = scanner.nextLine();
+        } else {
+            System.out.println("Insured person has an insurance card.");
+            cardNumber = insuredPerson.getInsuranceCard().getCardNumber();
+        }
         System.out.print("Enter exam date(Press enter to get current date)(yyyy-MM-dd): ");
         String examDateInput = scanner.nextLine();
         Date examDate;
@@ -63,8 +89,10 @@ public class ClaimProcessManager {
         System.out.print("Enter banking information(Bank–Name–Number): ");
         String bankingInfo = scanner.nextLine();
 
-        String id = UUID.randomUUID().toString();
-        return new Claim(id, claimDate, insuredPerson, cardNumber, examDate, null, claimAmount, "Pending", bankingInfo);
+        String id = "f-" + IdManager.generateId(10);
+        Claim claim = new Claim(id, claimDate, insuredPerson.getFullName(), cardNumber, examDate, null, claimAmount, "Pending", bankingInfo);
+        insuredPerson.getClaims().add(claim);
+        return claim;
     }
 
     private Date removeTimeComponent(Date date) {

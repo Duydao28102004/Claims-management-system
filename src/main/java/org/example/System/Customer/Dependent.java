@@ -17,11 +17,25 @@ public class Dependent extends Customer {
 
     @Override
     public String toString() {
-        return "Dependent{" +
-                "id='" + getId() + '\'' +
-                ", fullName='" + getFullName() + '\'' +
-                ", insuranceCard=" + getInsuranceCard() +
-                ", claims=" + getClaims() +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Dependent{")
+                .append("id='").append(getId()).append('\'')
+                .append(", fullName='").append(getFullName()).append('\'')
+                .append(", insuranceCard=").append(getInsuranceCard());
+
+        // Append IDs of claims
+        stringBuilder.append(", claims=[");
+        for (Claim claim : getClaims()) {
+            stringBuilder.append(claim.getId()).append(" - ").append(claim.getStatus()).append(", ");
+        }
+        // Remove the trailing comma and space if there are claims
+        if (!getClaims().isEmpty()) {
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        }
+        stringBuilder.append("]");
+
+        stringBuilder.append('}');
+        return stringBuilder.toString();
     }
 }
