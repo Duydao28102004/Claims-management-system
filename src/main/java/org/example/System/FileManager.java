@@ -13,48 +13,42 @@ import java.util.ArrayList;
 public class FileManager {
     public void fileWriter(Object object, String fileName) {
         String folderPath = "./data/";
-        File file = new File(folderPath, fileName);
-        if (file.exists()) {
-            System.out.println("The file exists in the folder.");
-        } else {
-            System.out.println("The file does not exist in the folder.");
-            System.out.println("Creating a new file...");
-            try {
-                file.createNewFile();
-                System.out.println("The file is created.");
-            } catch (Exception e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
-        }
+        createNewFile(folderPath, fileName);
         Gson gson = new Gson();
         String json = gson.toJson(object);
         try (FileWriter writer = new FileWriter(folderPath + fileName, false)) {
             // Write JSON string to file
             writer.write(json);
-            System.out.println("Object written to file successfully!");
+            System.out.println("Object written to " + fileName + " successfully!");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private void createNewFile(String folderPath, String fileName) {
+        File file = new File(folderPath + fileName);
+        if (file.exists()) {
+            System.out.println( fileName + " exists in the folder.");
+        } else {
+            System.out.println("The file does not exist in the folder.");
+            System.out.println("Creating a new file...");
+            try {
+                file.createNewFile();
+                // Add square brackets to the new JSON file
+                FileWriter writer = new FileWriter(file);
+                writer.write("[]"); // Write square brackets to the file to store array list
+                writer.close();
+                System.out.println("The file is created.");
+            } catch (Exception e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
         }
     }
     public ArrayList<Claim> claimReader() {
         Gson gson = new Gson();
         String folderPath = "./data/";
         String fileName = "claim.json";
-        File file = new File(folderPath + fileName);
-        if (file.exists()) {
-            System.out.println("The file exists in the folder.");
-        } else {
-            System.out.println("The file does not exist in the folder.");
-            System.out.println("Creating a new file...");
-            try {
-                file.createNewFile();
-                System.out.println("The file is created.");
-            } catch (Exception e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
-        }
+        createNewFile(folderPath, fileName);
         try (FileReader reader = new FileReader(folderPath + fileName)) {
             // Read JSON file
             TypeToken<ArrayList<Claim>> collectionType = new TypeToken<ArrayList<Claim>>(){};
@@ -70,20 +64,7 @@ public class FileManager {
         Gson gson = new Gson();
         String folderPath = "./data/";
         String fileName = "dependent.json";
-        File file = new File(folderPath + fileName);
-        if (file.exists()) {
-            System.out.println("The file exists in the folder.");
-        } else {
-            System.out.println("The file does not exist in the folder.");
-            System.out.println("Creating a new file...");
-            try {
-                file.createNewFile();
-                System.out.println("The file is created.");
-            } catch (Exception e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
-        }
+        createNewFile(folderPath, fileName);
         try (FileReader reader = new FileReader(folderPath + fileName)) {
             // Read JSON file
             TypeToken<ArrayList<Dependent>> collectionType = new TypeToken<ArrayList<Dependent>>(){};
@@ -99,20 +80,7 @@ public class FileManager {
         Gson gson = new Gson();
         String folderPath = "./data/";
         String fileName = "policyHolder.json";
-        File file = new File(folderPath + fileName);
-        if (file.exists()) {
-            System.out.println("The file exists in the folder.");
-        } else {
-            System.out.println("The file does not exist in the folder.");
-            System.out.println("Creating a new file...");
-            try {
-                file.createNewFile();
-                System.out.println("The file is created.");
-            } catch (Exception e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
-        }
+        createNewFile(folderPath, fileName);
         try (FileReader reader = new FileReader(folderPath + fileName)) {
             // Read JSON file
             TypeToken<ArrayList<PolicyHolder>> collectionType = new TypeToken<ArrayList<PolicyHolder>>(){};
@@ -124,4 +92,22 @@ public class FileManager {
             return null;
         }
     }
+    public ArrayList<InsuranceCard> insuranceCardReader() {
+        Gson gson = new Gson();
+        String folderPath = "./data/";
+        String fileName = "insuranceCard.json";
+        createNewFile(folderPath, fileName);
+        try (FileReader reader = new FileReader(folderPath + fileName)) {
+            // Read JSON file
+            TypeToken<ArrayList<InsuranceCard>> collectionType = new TypeToken<ArrayList<InsuranceCard>>(){};
+            ArrayList<InsuranceCard> insuranceCards = gson.fromJson(reader, collectionType);
+            System.out.println("Object read from file successfully!");
+            return insuranceCards;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

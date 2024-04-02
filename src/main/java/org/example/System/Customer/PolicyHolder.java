@@ -33,7 +33,9 @@ public class PolicyHolder extends Customer {
         stringBuilder.append("PolicyHolder{")
                 .append("id='").append(getId()).append('\'')
                 .append(", fullName='").append(getFullName()).append('\'')
-                .append(", insuranceCard=").append(getInsuranceCard());
+                .append(", insuranceCard=").append(
+                        getInsuranceCard() == null ? "null" : getInsuranceCard().getCardNumber()
+                );
 
         // Append IDs of claims
         stringBuilder.append(", claims=[");
