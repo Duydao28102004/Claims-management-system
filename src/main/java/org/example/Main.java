@@ -40,6 +40,8 @@ public class Main {
                     System.out.println("2. Update claim");
                     System.out.println("3. Delete claim");
                     System.out.println("4. View claims");
+                    System.out.println("5. Add document");
+                    System.out.println("6. Delete document");
                     System.out.println("0. Exit");
                     System.out.print("Enter your choice:");
                     choice = scanner.nextInt();
@@ -59,6 +61,12 @@ public class Main {
                             break;
                         case 4:
                             claimProcessManager.printClaim(claims);
+                            break;
+                        case 5:
+                            claimProcessManager.addDocument(claims);
+                            break;
+                        case 6:
+                            claimProcessManager.deleteDocument(claims);
                             break;
                         case 0:
                             System.out.println("Exiting to main menu...");
@@ -83,7 +91,7 @@ public class Main {
                             dependents.add(dependent);
                             break;
                         case 2:
-                            DependentManager.deleteDependent(dependents);
+                            DependentManager.deleteDependent(dependents, policyHolders);
                             break;
                         case 3:
                             DependentManager.printDependent(dependents);
@@ -101,6 +109,8 @@ public class Main {
                     System.out.println("1. Add policy holders");
                     System.out.println("2. Delete policy holders");
                     System.out.println("3. View policy holders");
+                    System.out.println("4. Add dependent to policy holder");
+                    System.out.println("5. Delete dependent from policy holder");
                     System.out.println("0. Exit");
                     System.out.print("Enter your choice:");
                     choice = scanner.nextInt();
@@ -115,6 +125,12 @@ public class Main {
                             break;
                         case 3:
                             PolicyHolderManager.printPolicyHolder(policyHolders);
+                            break;
+                        case 4:
+                            PolicyHolderManager.addDependent(policyHolders, dependents);
+                            break;
+                        case 5:
+                            PolicyHolderManager.deleteDependent(policyHolders, dependents);
                             break;
                         case 0:
                             System.out.println("Exiting to main menu...");

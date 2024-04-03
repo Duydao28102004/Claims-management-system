@@ -7,22 +7,22 @@ import java.util.ArrayList;
 
 
 public class PolicyHolder extends Customer {
-    private ArrayList<Dependent> dependents;
+    private ArrayList<String> dependents;
     public PolicyHolder() {
         super();
         dependents = null;
     }
 
-    public PolicyHolder(String id, String fullName, InsuranceCard insuranceCard, ArrayList<Claim> claims, ArrayList<Dependent> dependents) {
+    public PolicyHolder(String id, String fullName, InsuranceCard insuranceCard, ArrayList<Claim> claims, ArrayList<String> dependents) {
         super(id, fullName, insuranceCard, claims);
         this.dependents = dependents;
     }
 
-    public ArrayList<Dependent> getDependents() {
+    public ArrayList<String> getDependents() {
         return dependents;
     }
 
-    public void setDependents(ArrayList<Dependent> dependents) {
+    public void setDependents(ArrayList<String> dependents) {
         this.dependents = dependents;
     }
 
@@ -49,17 +49,18 @@ public class PolicyHolder extends Customer {
         stringBuilder.append(']');
 
         // Append IDs of dependent claims
-        stringBuilder.append(", dependentClaims=[");
-        for (Dependent dependent : dependents) {
-            for (Claim claim : dependent.getClaims()) {
-                stringBuilder.append(claim.getId()).append(", ");
-            }
-        }
+
         // Remove the trailing comma and space if there are dependent claims
-        if (!dependents.isEmpty() && !dependents.get(0).getClaims().isEmpty()) {
-            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        if (dependents.isEmpty()) {
+            stringBuilder.append(", dependents list=null");
+        } else {
+            stringBuilder.append("\n   dependents list=[");
+            for (String dependent : dependents) {
+                stringBuilder.append(dependent).append(", ");
+            }
+            stringBuilder.append(']');
         }
-        stringBuilder.append(']');
+
 
         stringBuilder.append('}');
         return stringBuilder.toString();

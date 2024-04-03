@@ -27,9 +27,9 @@ public class DependentManager {
         InsuranceCard insuranceCard = null;
         ArrayList<Claim> claims = new ArrayList<>();
         String id = "c-" + IdManager.generateId(7);
-        return new Dependent(id, fullName, insuranceCard, claims);
+        return new Dependent(id, fullName, insuranceCard, claims, null);
     }
-    public static void deleteDependent(ArrayList<Dependent> dependents) {
+    public static void deleteDependent(ArrayList<Dependent> dependents, ArrayList<PolicyHolder> policyHolders) {
         printDependent(dependents);
         if (dependents.size() == 0) {
             return;
@@ -56,6 +56,17 @@ public class DependentManager {
             System.out.println("Dependent has an insurance card. Delete it first to delete the dependent.");
             System.out.println("Insurance card: " + dependents.get(id).getInsuranceCard().getCardNumber());
             return;
+        }
+        String policyHolderId = dependents.get(id).getPolicyHolder().split(" - ")[0];
+        for (PolicyHolder policyHolder : policyHolders) {
+            if (policyHolder.getId().equals(policyHolderId)) {
+                for (String dependent : policyHolder.getDependents()) {
+                    if (dependent.contains(dependents.get(id).getId())) {
+                        policyHolder.getDependents().remove(dependent);
+                        break;
+                    }
+                }
+            }
         }
         System.out.println("Dependent deleted.");
         dependents.remove(id);

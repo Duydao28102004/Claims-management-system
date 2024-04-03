@@ -62,22 +62,7 @@ public class ClaimProcessManager {
             System.out.println("Insured person has an insurance card. Autofill it in the claim.");
             cardNumber = insuredPerson.getInsuranceCard().getCardNumber();
         }
-        System.out.print("Enter claim date(Press enter to get current date)(yyyy-MM-dd): ");
-        String claimDateInput = scanner.nextLine();
-        Date claimDate;
-
-        if (claimDateInput.isEmpty()) {
-            claimDate = new Date(); // Get current date
-        } else {
-            // Parse the input string to Date object
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                claimDate = dateFormat.parse(claimDateInput);
-            } catch (Exception e) {
-                System.out.println("Invalid date format. Current date is set as claim date.");
-                claimDate = new Date(); // Set current date as default
-            }
-        }
+        Date claimDate = new Date();;
         // Remove time component from claimDate
         claimDate = removeTimeComponent(claimDate);
         System.out.print("Enter exam date(Press enter to get current date)(yyyy-MM-dd): ");
@@ -101,6 +86,20 @@ public class ClaimProcessManager {
         System.out.print("Enter claim amount: ");
         double claimAmount = scanner.nextDouble();
         scanner.nextLine(); // Consume newline left-over
+        ArrayList<String> documents = new ArrayList<>();
+        System.out.print("Do you want to add documents?(y/n): ");
+        String choice = scanner.nextLine();
+        while (choice.equals("y")) {
+            System.out.print("Enter document name (pdf file): ");
+            String document = scanner.nextLine();
+            if(document.contains(".pdf")) {
+                documents.add(document);
+            } else {
+                System.out.println("Invalid file format. Only pdf files are allowed.");
+            }
+            System.out.print("Do you want to add more documents?(y/n): ");
+            choice = scanner.nextLine();
+        }
         System.out.print("Enter receiving bank name: ");
         String bankName = scanner.nextLine();
         System.out.print("Enter receiving account name: ");
@@ -110,7 +109,7 @@ public class ClaimProcessManager {
         String bankingInfo = bankName + "-" + accountName + "-" + accountNumber;
 
         String id = "f-" + IdManager.generateId(10);
-        Claim claim = new Claim(id, claimDate, insuredPerson.getFullName(), cardNumber, examDate, null, claimAmount, "new", bankingInfo);
+        Claim claim = new Claim(id, claimDate, insuredPerson.getFullName(), cardNumber, examDate, documents, claimAmount, "new", bankingInfo);
         insuredPerson.getClaims().add(claim);
         return claim;
     }
@@ -140,20 +139,6 @@ public class ClaimProcessManager {
         String claimAmountInput = scanner.nextLine();
         if (!claimAmountInput.isEmpty()) {
             claim.setClaimAmount(Double.parseDouble(claimAmountInput));
-        }
-        System.out.println("Current exam date: " + claim.getExamDate() + ".");
-        System.out.print("Enter new exam date(yyyy-MM-dd)(Enter to skip): ");
-        String claimDateInput = scanner.nextLine();
-        if (!claimDateInput.isEmpty()) {
-            // Parse the input string to Date object
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date claimDate = dateFormat.parse(claimDateInput);
-                removeTimeComponent(claimDate);
-                claim.setClaimDate(claimDate);
-            } catch (Exception e) {
-                System.out.println("Invalid date format. Claim exam date not updated.");
-            }
         }
         System.out.println("Current exam date: " + claim.getExamDate() + ".");
         System.out.print("Enter new exam date(yyyy-MM-dd)(Enter to skip): ");
@@ -250,5 +235,67 @@ public class ClaimProcessManager {
         }
         claims.remove(id);
         System.out.println("Claim deleted successfully!");
+    }
+    public void addDocument(ArrayList<Claim> claims) {
+        printClaim(claims);
+        System.out.println("Select a claim to add document:");
+        String index = scanner.nextLine();
+        int id = Integer.parseInt(index) - 1;
+        String choice = "y";
+        while (choice.equals("y")) {
+            System.out.print("Enter document name (pdf file): ");
+            String document = scanner.nextLine();
+            if(document.contains(".pdf")) {
+                claims.get(id).getDocuments().add(document);
+            } else {
+                System.out.println("Invalid file format. Only pdf files are allowed.");
+            }
+            System.out.print("Do you want to add more documents?(y/n): ");
+            choice = scanner.nextLine();
+            if (!Objects.equals(choice, "y") && !Objects.equals(choice, "n")) {
+                System.out.println("Invalid choice. Documents not added.");
+                break;
+            }
+        }
+        System.out.println("Documents added successfully.");
+    }
+    public void deleteDocument(ArrayList<Claim> claims) {
+        printClaim(claims);
+        System.out.println("Select a claim to delete document:");
+        String index = scanner.nextLine();
+        int id = Integer.parseInt(index) - 1;
+        if (id < 0 || id >= claims.size()) {
+            System.out.println("Invalid choice. Returning to menu.");
+            return;
+        }
+        if (claims.get(id).getDocuments().size() == 0) {
+            System.out.println("No documents found.");
+            return;
+        }
+        String choice = "y";
+        while (choice.equals("y")) {
+            System.out.println("Current documents: ");
+            int counter = 1;
+            for (String document : claims.get(id).getDocuments()) {
+                System.out.println(counter + document);
+                counter++;
+            }
+            System.out.print("Enter the index of the document you want to delete: ");
+            String userInput = scanner.nextLine();
+            int docId = Integer.parseInt(userInput) - 1;
+            if (docId < 0 || docId >= claims.get(id).getDocuments().size()) {
+                System.out.println("Invalid choice. Please try again.");
+            } else {
+                claims.get(id).getDocuments().remove(docId);
+                System.out.println("Document deleted successfully.");
+            }
+
+            System.out.print("Do you want to delete more documents?(y/n): ");
+            choice = scanner.nextLine();
+            if (!Objects.equals(choice, "y") && !Objects.equals(choice, "n")) {
+                System.out.println("Invalid choice. Returning to menu.");
+                break;
+            }
+        }
     }
 }

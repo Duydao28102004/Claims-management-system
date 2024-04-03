@@ -1,7 +1,7 @@
 package org.example.System;
 
 import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Claim {
     private String id;
@@ -9,7 +9,7 @@ public class Claim {
     private String insuredPerson;
     private String cardNumber;
     private Date examDate;
-    private List<String> documents;
+    private ArrayList<String> documents;
     private double claimAmount;
     private String status;
     private String bankingInfo;
@@ -26,7 +26,7 @@ public class Claim {
         bankingInfo = "default";
     }
 
-    public Claim(String id, Date claimDate, String insuredPerson, String cardNumber, Date examDate, List<String> documents, double claimAmount, String status, String bankingInfo) {
+    public Claim(String id, Date claimDate, String insuredPerson, String cardNumber, Date examDate, ArrayList<String> documents, double claimAmount, String status, String bankingInfo) {
         this.id = id;
         this.claimDate = claimDate;
         this.insuredPerson = insuredPerson;
@@ -78,11 +78,11 @@ public class Claim {
         this.examDate = examDate;
     }
 
-    public List<String> getDocuments() {
+    public ArrayList<String> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<String> documents) {
+    public void setDocuments(ArrayList<String> documents) {
         this.documents = documents;
     }
 
@@ -111,16 +111,15 @@ public class Claim {
     }
     @Override
     public String toString() {
-        return "Claim{" +
+        return "Claim:" +
                 "id='" + id + '\'' +
                 ", claimDate=" + claimDate +
-                ", insuredPerson='" + insuredPerson + '\'' +
+                "\n         insuredPerson='" + insuredPerson + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
                 ", examDate=" + examDate +
-                ", documents=" + documents +
+                "\n         documents=" + documents +
                 ", claimAmount=" + claimAmount +
                 ", status='" + status + '\'' +
-                ", bankingInfo='" + bankingInfo + '\'' +
-                '}';
+                "\n         bankingInfo='" + bankingInfo + '\'';
     }
 }
