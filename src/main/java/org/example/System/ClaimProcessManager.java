@@ -111,6 +111,7 @@ public class ClaimProcessManager {
         String id = "f-" + IdManager.generateId(10);
         Claim claim = new Claim(id, claimDate, insuredPerson.getFullName(), cardNumber, examDate, documents, claimAmount, "new", bankingInfo);
         insuredPerson.getClaims().add(claim);
+        System.out.println("Claim added successfully!");
         return claim;
     }
 

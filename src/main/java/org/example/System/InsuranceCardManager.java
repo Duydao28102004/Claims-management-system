@@ -16,11 +16,11 @@ public class InsuranceCardManager {
     public InsuranceCard createInsuranceCard(ArrayList<Dependent> dependents, ArrayList<PolicyHolder> policyHolders) {
         System.out.println("Dependents:");
         for (int i = 0; i < dependents.size(); i++) {
-            System.out.println((i + 1) + ". " + dependents.get(i).toString() + " - Current insurance card:" + dependents.get(i).getInsuranceCard());
+            System.out.println((i + 1) + ". " + dependents.get(i).getFullName() + " - "+ dependents.get(i).getId() + " - Policy Holder: {" + dependents.get(i).getPolicyHolder() + "} - Current insurance card: " + dependents.get(i).getInsuranceCard());
         }
         System.out.println("Policyholders:");
         for (int i = 0; i < policyHolders.size(); i++) {
-            System.out.println((i + 1 + dependents.size()) + ". " + policyHolders.get(i).toString() + " - Current insurance card:" + policyHolders.get(i).getInsuranceCard());
+            System.out.println((i + 1 + dependents.size()) + ". " + policyHolders.get(i).getFullName() + " - "+ policyHolders.get(i).getId() + " - Current insurance card: " + policyHolders.get(i).getInsuranceCard());
         }
         System.out.print("Enter the id of person that you want to create insurance card: ");
         int selectedIndex = scanner.nextInt();
@@ -39,9 +39,29 @@ public class InsuranceCardManager {
             return null;
 
         }
+        String policyOwner = null;
+
+        if (cardHolder instanceof Dependent) {
+            if (Objects.equals(((Dependent) cardHolder).getPolicyHolder(), "null")) {
+                System.out.println("Dependent does not have a policy holder. Add this dependent to policy holder first.");
+                return null;
+            }
+            String policyHolderId = ((Dependent) cardHolder).getPolicyHolder().split(" - ")[0];
+            for (PolicyHolder policyHolder : policyHolders) {
+                if (Objects.equals(policyHolder.getId(), policyHolderId)) {
+                    if (policyHolder.getInsuranceCard() == null) {
+                        System.out.println("Create insurance card for the policy holder (" + policyHolder.getId()+ " - " +policyHolder.getFullName()+ ") first.");
+                        return null;
+                    }
+                    policyOwner = policyHolder.getInsuranceCard().getPolicyOwner();
+                    break;
+                }
+            }
+        } else {
+            System.out.print("Enter policy owner name: ");
+            policyOwner = scanner.nextLine();
+        }
         String cardNumber = IdManager.generateId(10);
-        System.out.print("Enter policy owner name: ");
-        String policyOwner = scanner.nextLine();
         System.out.print("Enter expiration date(yyyy-MM-dd): ");
         String expirationDateInput = scanner.nextLine();
         Date expirationDate;
@@ -50,12 +70,13 @@ public class InsuranceCardManager {
         try {
             expirationDate = dateFormat.parse(expirationDateInput);
         } catch (Exception e) {
-            System.out.println("Invalid date format. Current date is set as expiration date.");
-            expirationDate = new Date(); // Set current date as default
+            System.out.println("Invalid date format. Returning to main menu.");
+            return null;
         }
 
         InsuranceCard insuranceCard = new InsuranceCard(cardNumber, cardHolder.getFullName(), policyOwner, expirationDate);
         cardHolder.setInsuranceCard(insuranceCard);
+        System.out.println("Insurance card created successfully.");
         return insuranceCard;
     }
     public void printInsuranceCard(ArrayList<InsuranceCard> insuranceCards) {

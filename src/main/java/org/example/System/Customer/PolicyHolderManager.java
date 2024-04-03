@@ -23,7 +23,7 @@ public class PolicyHolderManager {
         }
     }
     public static PolicyHolder createPolicyHolder() {
-        System.out.println("Enter policy holder full name: ");
+        System.out.print("Enter policy holder full name: ");
         String fullName = scanner.nextLine();
         InsuranceCard insuranceCard = null;
         ArrayList<Claim> claims = new ArrayList<>();
