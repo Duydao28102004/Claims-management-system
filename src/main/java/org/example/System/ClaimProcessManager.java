@@ -11,6 +11,10 @@ public class ClaimProcessManager {
 
     public void printClaim(ArrayList<Claim> claims) {
         int index = 1;
+        if (claims.isEmpty()) {
+            System.out.println("No claims found.");
+            return;
+        }
         for (Claim claim : claims) {
             System.out.println(index + ". " + claim.toString());
             index++;
@@ -19,14 +23,26 @@ public class ClaimProcessManager {
 
     public Claim addClaim(ArrayList<Dependent> dependents, ArrayList<PolicyHolder> policyHolders) {
         System.out.println("Dependents:");
-        for (int i = 0; i < dependents.size(); i++) {
-            System.out.println((i + 1) + ". " + dependents.get(i).toString());
+        if (dependents.isEmpty()) {
+            System.out.println("No dependents found.");
+        } else {
+            for (int i = 0; i < dependents.size(); i++) {
+                System.out.println((i + 1) + ". " + dependents.get(i).toString());
+            }
         }
         System.out.println("Policyholders:");
-        for (int i = 0; i < policyHolders.size(); i++) {
-            System.out.println((i + 1 + dependents.size()) + ". " + policyHolders.get(i).toString());
+        if (policyHolders.isEmpty()) {
+            System.out.println("No policyholders found.");
+        } else {
+            for (int i = 0; i < policyHolders.size(); i++) {
+                System.out.println((i + 1 + dependents.size()) + ". " + policyHolders.get(i).toString());
+            }
         }
-        System.out.print("Enter the id of insured person: ");
+        if (dependents.isEmpty() && policyHolders.isEmpty()) {
+            System.out.println("No customers found. Claim creation failed.");
+            return null;
+        }
+        System.out.print("Enter the number of insured person: ");
         int selectedIndex = scanner.nextInt();
         scanner.nextLine(); // Consume newline left-over
         Customer insuredPerson;

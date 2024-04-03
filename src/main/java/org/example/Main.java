@@ -55,10 +55,10 @@ public class Main {
                             claimProcessManager.updateClaim(claims, dependents, policyHolders);
                             break;
                         case 3:
-                            claimProcessManager.printClaim(claims);
+                            claimProcessManager.deleteClaim(claims, dependents, policyHolders);
                             break;
                         case 4:
-                            claimProcessManager.deleteClaim(claims, dependents, policyHolders);
+                            claimProcessManager.printClaim(claims);
                             break;
                         case 0:
                             System.out.println("Exiting to main menu...");
@@ -128,6 +128,7 @@ public class Main {
                     System.out.println("Insurance cards menu:");
                     System.out.println("1. Add insurance cards");
                     System.out.println("2. Delete insurance cards");
+                    System.out.println("3. View insurance cards");
                     System.out.print("Enter your choice:");
                     choice = scanner.nextInt();
                     scanner.nextLine(); // Consume newline character
@@ -142,6 +143,7 @@ public class Main {
                             insuranceCardManager.deleteInsuranceCard(dependents, policyHolders, insuranceCards, claims);
                             break;
                         case 3:
+                            insuranceCardManager.printInsuranceCard(insuranceCards);
                             break;
                         case 0:
                             System.out.println("Exiting to main menu...");

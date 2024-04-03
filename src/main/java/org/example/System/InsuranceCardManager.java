@@ -7,6 +7,7 @@ import org.example.System.Customer.PolicyHolder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -59,6 +60,10 @@ public class InsuranceCardManager {
     }
     public void printInsuranceCard(ArrayList<InsuranceCard> insuranceCards) {
         int counter = 1;
+        if (insuranceCards.size() == 0) {
+            System.out.println("No insurance card found.");
+            return;
+        }
         for (InsuranceCard insuranceCard : insuranceCards) {
             System.out.println(counter + ". " + insuranceCard.toString());
             counter++;
@@ -72,7 +77,9 @@ public class InsuranceCardManager {
 
         // check if the insurance card are in use or not
         for (Claim claim : claims) {
-            if (claim.getCardNumber() == insuranceCards.get(id).getCardNumber()) {
+            System.out.println(claim.getCardNumber());
+            System.out.println(insuranceCards.get(id).getCardNumber());
+            if (Objects.equals(claim.getCardNumber(), insuranceCards.get(id).getCardNumber())) {
                 System.out.println("Insurance card is used in a claim with the id " + claim.getId() + ". Cannot delete.");
                 return;
             }
@@ -80,12 +87,12 @@ public class InsuranceCardManager {
 
         // remove the insurance card from the dependents and policy holders
         for (Dependent dependent : dependents) {
-            if (dependent.getInsuranceCard() != null && dependent.getInsuranceCard().getCardNumber() == insuranceCards.get(id).getCardNumber()) {
+            if (dependent.getInsuranceCard() != null && Objects.equals(dependent.getInsuranceCard().getCardNumber(), insuranceCards.get(id).getCardNumber())) {
                 dependent.setInsuranceCard(null);
             }
         }
         for (PolicyHolder policyHolder : policyHolders) {
-            if (policyHolder.getInsuranceCard() != null && policyHolder.getInsuranceCard().getCardNumber() == insuranceCards.get(id).getCardNumber()) {
+            if (policyHolder.getInsuranceCard() != null && Objects.equals(policyHolder.getInsuranceCard().getCardNumber(), insuranceCards.get(id).getCardNumber())) {
                 policyHolder.setInsuranceCard(null);
             }
         }
