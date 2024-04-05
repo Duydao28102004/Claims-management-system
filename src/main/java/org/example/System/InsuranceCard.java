@@ -1,6 +1,9 @@
 package org.example.System;
 
-import org.example.System.Customer.Customer;
+/**
+ * @author <Dao Bao Duy - s3978826>
+ *     Adapted from: chatGPT, w3schools
+ */
 
 import java.util.Date;
 

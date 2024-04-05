@@ -1,30 +1,38 @@
 package org.example.System.Customer;
 
+/**
+ * @author <Dao Bao Duy - s3978826>
+ *     Adapted from: chatGPT, w3schools
+ */
+
 import org.example.System.Claim;
 import org.example.System.IdManager;
 import org.example.System.InsuranceCard;
-
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class PolicyHolderManager {
     static Scanner scanner = new Scanner(System.in);
     public static void printPolicyHolder(ArrayList<PolicyHolder> policyHolders) {
         int counter = 1;
+        // Check if there are no policy holders
         if (policyHolders.size() == 0) {
             System.out.println("No policy holders found.");
             return;
         }
+        // Print all policy holders
         for (PolicyHolder policyHolder : policyHolders) {
             System.out.println(counter+ ". "+policyHolder.toString());
             counter++;
         }
     }
     public static PolicyHolder createPolicyHolder() {
+        // Get policy holder full name
         System.out.print("Enter policy holder full name: ");
         String fullName = scanner.nextLine();
+
+        // Create a new policy holder
         InsuranceCard insuranceCard = null;
         ArrayList<Claim> claims = new ArrayList<>();
         ArrayList<String> dependents = new ArrayList<>();
@@ -33,16 +41,20 @@ public class PolicyHolderManager {
     }
     public static void deletePolicyHolder(ArrayList<PolicyHolder> policyHolders) {
         printPolicyHolder(policyHolders);
+        // Check if there are no policy holders
         if (policyHolders.size() == 0) {
             return;
         }
+        // Get the policy holder to delete
         System.out.println("Enter the number of the policy holder you want to delete: ");
         String userInput = scanner.nextLine();
         int id = Integer.parseInt(userInput) - 1;
+        // Check if the input is valid
         if (userInput.isEmpty() || id < 0 || id >= policyHolders.size()) {
             System.out.println("Invalid input. Please enter a valid number.");
             return;
         }
+        // Check if the policy holder is in claims
         for (PolicyHolder policyHolder : policyHolders) {
             if (policyHolder.getClaims().size() != 0) {
                 System.out.println("Policy holder is in claims. Delete claim first.");
@@ -54,6 +66,8 @@ public class PolicyHolderManager {
                 return;
             }
         }
+
+        // Check if the policy holder has an insurance card
         if (policyHolders.get(id).getInsuranceCard() != null) {
             System.out.println("Policy holder has an insurance card. Delete it first to delete the policy holder.");
             System.out.println("Insurance card: " + policyHolders.get(id).getInsuranceCard().getCardNumber());
@@ -65,10 +79,12 @@ public class PolicyHolderManager {
 
     public static void addDependent(ArrayList<PolicyHolder> policyHolders, ArrayList<Dependent> dependents) {
         printPolicyHolder(policyHolders);
+        // Check if there are no policy holders
         if (policyHolders.size() == 0) {
             System.out.println("No policy holders found.");
             return;
         }
+        // Get the policy holder to add dependent to
         System.out.println("Enter the number of the policy holder you want to add dependent to: ");
         String userInput = scanner.nextLine();
         int id = Integer.parseInt(userInput) - 1;
@@ -76,6 +92,7 @@ public class PolicyHolderManager {
             System.out.println("Invalid input. Returning to main menu.");
             return;
         }
+        // Check if the policy holder has an insurance card
         int counter = 1;
         for (Dependent dependent: dependents) {
             System.out.print(counter + ". " + dependent.getFullName() + " - Policy Holder: ");
@@ -86,13 +103,16 @@ public class PolicyHolderManager {
             }
             counter++;
         }
+
         if (dependents.size() == 0) {
             System.out.println("No dependents found.");
             return;
         }
+        // Get the dependent to add
         System.out.println("Enter the number of the dependent you want to add: ");
         userInput = scanner.nextLine();
         int dependentId = Integer.parseInt(userInput) - 1;
+        // Check if the input is valid
         if (userInput.isEmpty() || dependentId < 0 || dependentId >= dependents.size()) {
             System.out.println("Invalid input. Returning to main menu.");
             return;
@@ -100,31 +120,39 @@ public class PolicyHolderManager {
             System.out.println("Dependent already has a policy holder. Returning to main menu.");
             return;
         }
+        // Add the dependent to the policy holder
         policyHolders.get(id).getDependents().add(dependents.get(dependentId).getId() + " - " + dependents.get(dependentId).getFullName());
+        // Update the dependent's policy holder
         dependents.get(dependentId).setPolicyHolder(policyHolders.get(id).getId() + " - " + policyHolders.get(id).getFullName());
         System.out.println("Dependent added to policy holder.");
     }
     public static void deleteDependent(ArrayList<PolicyHolder> policyHolders, ArrayList<Dependent> dependents) {
         printPolicyHolder(policyHolders);
+        // Check if there are no policy holders
         if (policyHolders.size() == 0) {
             System.out.println("No policy holders found.");
             return;
         }
+        // Get the policy holder to delete dependent from
         System.out.println("Enter the number of the policy holder you want to delete dependent from: ");
         String userInput = scanner.nextLine();
+        // Check if the input is valid
         if (userInput.equals("")) {
             System.out.println("Invalid input. Returning to main menu.");
             return;
         }
         int id = Integer.parseInt(userInput) - 1;
+        // Check if the input is valid
         if (id < 0 || id >= policyHolders.size()) {
             System.out.println("Invalid input. Returning to main menu.");
             return;
         }
+        // Check if the policy holder has dependents
         if (policyHolders.get(id).getDependents().size() == 0) {
             System.out.println("No dependents found.");
             return;
         }
+        // Get the dependent to delete
         int counter = 1;
         for (String dependent: policyHolders.get(id).getDependents()) {
             System.out.println(counter + ". " + dependent);
@@ -132,6 +160,7 @@ public class PolicyHolderManager {
         }
         System.out.println("Enter the number of the dependent you want to delete: ");
         userInput = scanner.nextLine();
+        // Check if the input is valid
         if (userInput.equals("")) {
             System.out.println("Invalid input. Returning to main menu.");
             return;
@@ -141,6 +170,8 @@ public class PolicyHolderManager {
             System.out.println("Invalid input. Returning to main menu.");
             return;
         }
+
+        // Take the id of dependent from the string and remove it from the dependent list
         String dependentIdString = policyHolders.get(id).getDependents().get(dependentId).split(" - ")[0];
         for (Dependent dependent: dependents) {
             if (Objects.equals(dependent.getId(), dependentIdString)) {

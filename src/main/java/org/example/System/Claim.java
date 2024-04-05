@@ -1,5 +1,10 @@
 package org.example.System;
 
+/**
+ * @author <Dao Bao Duy - s3978826>
+ *     Adapted from: chatGPT, w3schools
+ */
+
 import java.util.Date;
 import java.util.ArrayList;
 

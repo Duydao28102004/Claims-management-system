@@ -1,8 +1,12 @@
 package org.example.System.Customer;
 
+/**
+ * @author <Dao Bao Duy - s3978826>
+ *     Adapted from: chatGPT, w3schools
+ */
+
 import org.example.System.Claim;
 import org.example.System.InsuranceCard;
-
 import java.util.List;
 import java.util.ArrayList;
 
