@@ -164,6 +164,7 @@ public class Main {
                         System.out.println("1. Add insurance cards");
                         System.out.println("2. Delete insurance cards");
                         System.out.println("3. View insurance cards");
+                        System.out.println("0. Exit");
                         System.out.print("Enter your choice:");
                         input = scanner.nextLine();
                         if (handleChoiceOutput(input)) {
