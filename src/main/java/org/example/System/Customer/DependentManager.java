@@ -11,6 +11,8 @@ import org.example.System.InsuranceCard;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static org.example.System.IdManager.isNumeric;
+
 public class DependentManager {
     static Scanner scanner = new Scanner(System.in);
 
@@ -49,6 +51,11 @@ public class DependentManager {
         // Get the dependent to delete
         System.out.println("Enter the number of the dependent you want to delete: ");
         String userInput = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         int id = Integer.parseInt(userInput) - 1;
 
         // Check if the input is valid

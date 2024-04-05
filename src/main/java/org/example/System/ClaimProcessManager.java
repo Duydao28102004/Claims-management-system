@@ -8,10 +8,12 @@ package org.example.System;
 import org.example.System.Customer.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import static org.example.System.IdManager.isNumeric;
 
 
 public class ClaimProcessManager {
     Scanner scanner = new Scanner(System.in);
+
 
     public void printClaim(ArrayList<Claim> claims) {
         int index = 1;
@@ -54,8 +56,14 @@ public class ClaimProcessManager {
 
         // Get the insured person from the list
         System.out.print("Enter the number of insured person: ");
-        int selectedIndex = scanner.nextInt();
-        scanner.nextLine(); // Consume newline left-over
+        String input = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(input)) {
+            System.out.println("Invalid selection. Claim creation failed.");
+            return null;
+        }
+        int selectedIndex = Integer.parseInt(input);
+         // Consume newline left-over
         Customer insuredPerson;
         // Check if the selected index is valid
         if (selectedIndex >= 1 && selectedIndex <= dependents.size()) {
@@ -155,6 +163,10 @@ public class ClaimProcessManager {
         // Get the claim to update
         System.out.print("Enter the index of the claim you want to update: ");
         String userChoice = scanner.nextLine();
+        if (!isNumeric(userChoice)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         // Check if the input is valid
         if (userChoice.isEmpty() || Integer.parseInt(userChoice) > claims.size() || Integer.parseInt(userChoice) < 1) {
             System.out.println("Invalid choice. Please try again.");
@@ -251,6 +263,11 @@ public class ClaimProcessManager {
         //  Get the claim to delete
         System.out.println("Enter the index of the claim you want to delete: ");
         String userInput = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Claim creation failed.");
+            return;
+        }
         int id = Integer.parseInt(userInput) - 1;
 
         // remove the claim in dependent and policy holder
@@ -280,6 +297,11 @@ public class ClaimProcessManager {
         // Get the claim to add document
         System.out.println("Select a claim to add document:");
         String index = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(index)) {
+            System.out.println("Invalid selection. Claim creation failed.");
+            return;
+        }
         int id = Integer.parseInt(index) - 1;
         String choice = "y";
         // Add documents
@@ -308,6 +330,11 @@ public class ClaimProcessManager {
         // Get the claim to delete document
         System.out.println("Select a claim to delete document:");
         String index = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(index)) {
+            System.out.println("Invalid selection. Claim creation failed.");
+            return;
+        }
         int id = Integer.parseInt(index) - 1;
         // Check if the claim has documents
         if (id < 0 || id >= claims.size()) {
@@ -333,7 +360,7 @@ public class ClaimProcessManager {
             String userInput = scanner.nextLine();
             int docId = Integer.parseInt(userInput) - 1;
             // Check if the input is valid
-            if (docId < 0 || docId >= claims.get(id).getDocuments().size()) {
+            if (docId < 0 || docId >= claims.get(id).getDocuments().size() || !isNumeric(userInput)) {
                 System.out.println("Invalid choice. Please try again.");
             } else {
                 claims.get(id).getDocuments().remove(docId);

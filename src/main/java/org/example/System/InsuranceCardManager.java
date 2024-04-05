@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static org.example.System.IdManager.isNumeric;
+
 
 public class InsuranceCardManager {
     Scanner scanner = new Scanner(System.in);
@@ -30,8 +32,14 @@ public class InsuranceCardManager {
 
         // Get the id of the person to create insurance card
         System.out.print("Enter the id of person that you want to create insurance card: ");
-        int selectedIndex = scanner.nextInt();
-        scanner.nextLine(); // Consume newline left-over
+        String input = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(input)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return null;
+        }
+        int selectedIndex = Integer.parseInt(input);
+        // Consume newline left-over
         // Check if the input is valid
         Customer cardHolder;
         if (selectedIndex >= 1 && selectedIndex <= dependents.size()) {
@@ -109,6 +117,11 @@ public class InsuranceCardManager {
         // Check if there are no insurance cards
         System.out.print("Enter the index of insurance card to delete: ");
         String userInput = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         int id = Integer.parseInt(userInput) - 1;
 
         // check if the insurance card are in use or not

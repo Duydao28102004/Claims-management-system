@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static org.example.System.IdManager.isNumeric;
+
 public class PolicyHolderManager {
     static Scanner scanner = new Scanner(System.in);
     public static void printPolicyHolder(ArrayList<PolicyHolder> policyHolders) {
@@ -48,6 +50,11 @@ public class PolicyHolderManager {
         // Get the policy holder to delete
         System.out.println("Enter the number of the policy holder you want to delete: ");
         String userInput = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         int id = Integer.parseInt(userInput) - 1;
         // Check if the input is valid
         if (userInput.isEmpty() || id < 0 || id >= policyHolders.size()) {
@@ -87,6 +94,11 @@ public class PolicyHolderManager {
         // Get the policy holder to add dependent to
         System.out.println("Enter the number of the policy holder you want to add dependent to: ");
         String userInput = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         int id = Integer.parseInt(userInput) - 1;
         if (userInput.isEmpty() || id < 0 || id >= policyHolders.size()) {
             System.out.println("Invalid input. Returning to main menu.");
@@ -111,6 +123,11 @@ public class PolicyHolderManager {
         // Get the dependent to add
         System.out.println("Enter the number of the dependent you want to add: ");
         userInput = scanner.nextLine();
+        // check user enter number or not
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         int dependentId = Integer.parseInt(userInput) - 1;
         // Check if the input is valid
         if (userInput.isEmpty() || dependentId < 0 || dependentId >= dependents.size()) {
@@ -136,6 +153,10 @@ public class PolicyHolderManager {
         // Get the policy holder to delete dependent from
         System.out.println("Enter the number of the policy holder you want to delete dependent from: ");
         String userInput = scanner.nextLine();
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         // Check if the input is valid
         if (userInput.equals("")) {
             System.out.println("Invalid input. Returning to main menu.");
@@ -160,6 +181,10 @@ public class PolicyHolderManager {
         }
         System.out.println("Enter the number of the dependent you want to delete: ");
         userInput = scanner.nextLine();
+        if (!isNumeric(userInput)) {
+            System.out.println("Invalid selection. Creation failed.");
+            return;
+        }
         // Check if the input is valid
         if (userInput.equals("")) {
             System.out.println("Invalid input. Returning to main menu.");
