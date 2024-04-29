@@ -2,6 +2,13 @@ package org.example.System.Provider;
 
 import org.example.System.Claim;
 import org.example.System.ClaimProcessManager;
+import org.example.System.Customer.Dependent;
+
+
+import org.example.System.Customer.PolicyHolder;
+import org.example.System.Customer.DependentManager;
+import org.example.System.Customer.PolicyHolderManager;
+
 import java.util.ArrayList;
 
 public class Provider {
@@ -74,6 +81,17 @@ public class Provider {
     public void printAllClaims(ArrayList<Claim> claims) {
         ClaimProcessManager claimProcessManager = new ClaimProcessManager();
         claimProcessManager.printClaim(claims);
+    }
+
+    public void printAllCustomers(ArrayList<Dependent> dependents, ArrayList<PolicyHolder> policyHolders) {
+        DependentManager dependentManager = new DependentManager();
+        PolicyHolderManager policyHolderManager = new PolicyHolderManager();
+
+        System.out.println("Dependents:");
+        dependentManager.printDependent(dependents);
+
+        System.out.println("Policy Holders:");
+        policyHolderManager.printPolicyHolder(policyHolders);
     }
 
 }
