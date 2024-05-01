@@ -8,7 +8,7 @@ package org.example.System;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class Claim {
+public class Claim implements ClaimStatusUpdater{
     private String id;
     private Date claimDate;
     private String insuredPerson;
@@ -105,6 +105,26 @@ public class Claim {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public void requestInformation(String comment) {
+
+    }
+
+    @Override
+    public void proposeClaim() {
+        setStatus("Proposed");
+    }
+
+    @Override
+    public void approveClaim() {
+        setStatus("Approved");
+    }
+
+    @Override
+    public void rejectClaim() {
+        setStatus("Rejected");
     }
 
     public String getBankingInfo() {

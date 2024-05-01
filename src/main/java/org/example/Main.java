@@ -10,6 +10,8 @@ import org.example.System.Customer.Dependent;
 import org.example.System.Customer.PolicyHolder;
 import org.example.System.Customer.PolicyHolderManager;
 import org.example.System.Customer.DependentManager;
+import org.example.System.Provider.Provider;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
@@ -26,6 +28,7 @@ public class Main {
     public static void main(String[] args) {
         ClaimProcessManager claimProcessManager = new ClaimProcessManager();
         InsuranceCardManager insuranceCardManager = new InsuranceCardManager();
+        Provider provider = new Provider();
         FileManager fileManager = new FileManager();
         ArrayList<Dependent> dependents = fileManager.dependentReader();
         ArrayList<Claim> claims = fileManager.claimReader();
@@ -41,6 +44,7 @@ public class Main {
             System.out.println("2. Dependent");
             System.out.println("3. Policy Holder");
             System.out.println("4. Insurance Card");
+            System.out.println("5. Provider");
             System.out.println("0. Exit");
             System.out.print("Enter your choice:");
             String input = scanner.nextLine();
@@ -191,6 +195,67 @@ public class Main {
                             }
                         }
                         break;
+                    case 5:
+                        System.out.println("Provider menu:");
+                        System.out.println("1. Print all claims");
+                        System.out.println("2. Print all customers");
+                        System.out.println("3. Print specific claim");
+                        System.out.println("4. Print specific customer");
+                        System.out.println("5. Sort Claims");
+                        System.out.println("0. Exit");
+                        System.out.print("Enter your choice:");
+                        input = scanner.nextLine();
+                        if (handleChoiceOutput(input)) {
+                            choice = Integer.parseInt(input);
+                            switch (choice) {
+                                case 1:
+                                    provider.printAllClaims(claims);
+                                    break;
+                                case 2:
+                                    provider.printAllCustomers(dependents, policyHolders);
+                                    break;
+                                case 3:
+                                    provider.printSpecificClaim(claims);
+                                    break;
+                                case 4:
+                                    provider.printSpecificCustomer(dependents, policyHolders);
+                                    break;
+                                case 5:
+                                    System.out.println("Claim sort options:");
+                                    System.out.println("1. Sort By Earliest Date");
+                                    System.out.println("2. Sort By Latest Date");
+                                    System.out.println("0. Exit");
+                                    System.out.print("Enter your choice:");
+                                    input = scanner.nextLine();
+                                    if (handleChoiceOutput(input)) {
+                                        choice = Integer.parseInt(input);
+                                        switch (choice) {
+                                            case 1:
+                                                provider.sortClaimEarliestCreated(claims);
+                                                break;
+                                            case 2:
+                                                provider.sortClaimLatestCreated(claims);
+                                                break;
+                                            case 0:
+                                                System.out.println("Exiting to main menu...");
+                                                break;
+                                            default:
+                                                System.out.println("Invalid choice. Please choose again.");
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case 0:
+                                    System.out.println("Exiting to main menu...");
+                                    break;
+                                default:
+                                    System.out.println("Invalid choice. Please choose again.");
+                                    break;
+                            }
+                        }
+                        break;
+
+
                     case 0:
                         exit = true;
                         System.out.println("Exiting...");
