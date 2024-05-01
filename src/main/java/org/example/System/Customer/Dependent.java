@@ -1,34 +1,30 @@
 package org.example.System.Customer;
 
-/**
- * @author <Dao Bao Duy - s3978826>
- *     Adapted from: chatGPT, w3schools
- */
-
 import org.example.System.Claim;
 import org.example.System.InsuranceCard;
 import java.util.ArrayList;
 
 public class Dependent extends Customer {
     private String policyHolder;
+
+    // Constructors
     public Dependent() {
         super();
-        policyHolder = "null";
+        this.policyHolder = "null";
     }
 
     public Dependent(String id, String fullName, InsuranceCard insuranceCard, ArrayList<Claim> claims, String policyHolder) {
-        super(id, fullName, insuranceCard, claims);
+        super(id, fullName, null, null, null, insuranceCard, claims);  // No email, phone, or address provided
         this.policyHolder = policyHolder;
     }
 
+    // Getter for policyHolder
     public String getPolicyHolder() {
         return policyHolder;
     }
 
-    public void setPolicyHolder(String policyHolder) {
-        this.policyHolder = policyHolder;
-    }
-
+    // Retrieve only methods for personal and claim information
+    // Ensure no set methods are exposed or overridden that allow modification
 
     @Override
     public String toString() {
